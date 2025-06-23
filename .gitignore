@@ -1,7 +1,22 @@
-client/node_modules
-server/node_modules
+# Ignore node_modules
+client/node_modules/
+server/node_modules/
+
+# Ignore dist folders
 client/dist/
 server/dist/
+
+# Ignore build folders
+client/.next/
+server/.next/
+
+# Ignore environment variables
 client/.env
 server/.env
-client/.next/
+
+# Ignore logs and misc
+*.log
+npm-debug.log*
+
+# macOS junk
+.DS_Store
