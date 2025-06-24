@@ -8,11 +8,11 @@ import Timeline from "../TimelineView";
 import Table from "../TableView";
 import ModalNewTask from "@/components/ModalNewTask";
 
-type Props = {
+interface Props {
   params: {
     id: string;
   };
-};
+}
 
 const ProjectPage = ({ params }: Props) => {
   const { id } = params;
