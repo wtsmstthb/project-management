@@ -5,18 +5,16 @@ import ProjectHeader from "@/app/projects/ProjectHeader";
 import Board from "../BoardView";
 import List from "../ListView";
 import Timeline from "../TimelineView";
-import Table from "../TableView"
+import Table from "../TableView";
 import ModalNewTask from "@/components/ModalNewTask";
 
-import { type FC } from "react";
-
-interface PageProps {
+type Props = {
   params: {
     id: string;
   };
-}
+};
 
-const ProjectPage: FC<PageProps> = ({ params }) => {
+const ProjectPage = ({ params }: Props) => {
   const { id } = params;
   const [activeTab, setActiveTab] = useState("Board");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
