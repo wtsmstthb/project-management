@@ -1,5 +1,5 @@
-"use client";
-
+import { type FC } from "react";
+import { type Metadata } from "next";
 import React, { useState } from "react";
 import ProjectHeader from "@/app/projects/ProjectHeader";
 import Board from "../BoardView";
@@ -9,12 +9,10 @@ import Table from "../TableView";
 import ModalNewTask from "@/components/ModalNewTask";
 
 interface Props {
-  params: {
-    id: string;
-  };
+  params: { id: string };
 }
 
-const ProjectPage = ({ params }: Props) => {
+const ProjectPage: FC<Props> = ({ params }) => {
   const { id } = params;
   const [activeTab, setActiveTab] = useState("Board");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
