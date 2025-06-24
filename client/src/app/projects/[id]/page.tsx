@@ -1,3 +1,5 @@
+'use client'
+
 import { type FC } from "react";
 import { type Metadata } from "next";
 import React, { useState } from "react";
