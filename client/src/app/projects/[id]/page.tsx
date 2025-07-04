@@ -1,5 +1,3 @@
-'use client'
-
 import { type FC } from "react";
 import { type Metadata } from "next";
 import React, { useState } from "react";
@@ -9,15 +7,16 @@ import List from "../ListView";
 import Timeline from "../TimelineView";
 import Table from "../TableView";
 import ModalNewTask from "@/components/ModalNewTask";
+import { useParams } from "next/navigation";
 
-interface Props {
-  params: { id: string };
-}
+const ProjectPage = () => {
+  const params = useParams();
+  const id = params?.id as string;
 
-const ProjectPage: FC<Props> = ({ params }) => {
-  const { id } = params;
   const [activeTab, setActiveTab] = useState("Board");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
+
+  if (!id) return <div>Loading...</div>;
 
   return (
     <div>
