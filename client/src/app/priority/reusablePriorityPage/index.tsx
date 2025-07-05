@@ -8,7 +8,7 @@ import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import {
   Priority,
   Task,
-  // useGetAuthUserQuery,
+  useGetAuthUserQuery,
   useGetTasksByUserQuery,
 } from "@/app/state/api";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -19,8 +19,16 @@ type Props = {
 };
 
 const columns: GridColDef[] = [
-  { field: "title", headerName: "Title", width: 100 },
-  { field: "description", headerName: "Description", width: 200 },
+  {
+    field: "title",
+    headerName: "Title",
+    width: 100,
+  },
+  {
+    field: "description",
+    headerName: "Description",
+    width: 200,
+  },
   {
     field: "status",
     headerName: "Status",
@@ -31,21 +39,37 @@ const columns: GridColDef[] = [
       </span>
     ),
   },
-  { field: "priority", headerName: "Priority", width: 75 },
-  { field: "tags", headerName: "Tags", width: 130 },
-  { field: "startDate", headerName: "Start Date", width: 130 },
-  { field: "dueDate", headerName: "Due Date", width: 130 },
+  {
+    field: "priority",
+    headerName: "Priority",
+    width: 75,
+  },
+  {
+    field: "tags",
+    headerName: "Tags",
+    width: 130,
+  },
+  {
+    field: "startDate",
+    headerName: "Start Date",
+    width: 130,
+  },
+  {
+    field: "dueDate",
+    headerName: "Due Date",
+    width: 130,
+  },
   {
     field: "author",
     headerName: "Author",
     width: 150,
-    renderCell: (params) => params.value?.username || "Unknown",
+    renderCell: (params) => params.value.username || "Unknown",
   },
   {
     field: "assignee",
     headerName: "Assignee",
     width: 150,
-    renderCell: (params) => params.value?.username || "Unassigned",
+    renderCell: (params) => params.value.username || "Unassigned",
   },
 ];
 
@@ -53,28 +77,23 @@ const ReusablePriorityPage = ({ priority }: Props) => {
   const [view, setView] = useState("list");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
 
-  // const { data: currentUser } = useGetAuthUserQuery({});
-  // const userId = currentUser?.userDetails?.userId ?? null;
-
-  // TEMP: fallback userId (e.g., demo user)
-  const userId = 1;
-
+  const { data: currentUser } = useGetAuthUserQuery({});
+  const userId = currentUser?.userDetails?.userId ?? null;
   const {
     data: tasks,
     isLoading,
     isError: isTasksError,
-  } = useGetTasksByUserQuery(userId, {
-    skip: !userId,
+  } = useGetTasksByUserQuery(userId || 0, {
+    skip: userId === null,
   });
 
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
   const filteredTasks = tasks?.filter(
-    (task: Task) => task.priority === priority
+    (task: Task) => task.priority === priority,
   );
 
-  if (isTasksError || !tasks)
-    return <div>Error fetching tasks</div>;
+  if (isTasksError || !tasks) return <div>Error fetching tasks</div>;
 
   return (
     <div className="m-5 p-4">
@@ -111,7 +130,6 @@ const ReusablePriorityPage = ({ priority }: Props) => {
           Table
         </button>
       </div>
-
       {isLoading ? (
         <div>Loading tasks...</div>
       ) : view === "list" ? (
